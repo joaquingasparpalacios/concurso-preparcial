@@ -7,4 +7,78 @@ describe "test TaylowSwift" {
   test "inicialmente ocupa 20m2 de escenario" {
     assert.equals(20, taylorswift.ocupaDeEscenario())
   }
+
+  test "taylor practica y el calidad asciende a 7" {
+    taylorswift.practicar()
+    assert.equals(7, taylorswift.calidad())
+  }
 }
+
+describe "test MORAT" {
+  test "se agrega a juan, pablo, simon y martin y la calidad es de 8" {
+    morat.integrantesDeLaBanda.addAll(["juan","pablo","simon","martin"])
+    assert.equals(8, morat.calidad())
+  }
+  test "ocupa 20m2 de escenario con todos sus miembros de la banda inciales." {
+    morat.integrantesDeLaBanda.addAll(["juan","pablo","simon","martin"])
+    assert.equals(20, morat.ocupaDeEscenario())
+  }
+
+  test "morat practica y  martin se va de la banda" {
+    morat.integrantesDeLaBanda.addAll(["juan","pablo","simon","martin"])
+    morat.practicar()
+    assert.notThat(morat.integrantesDeLaBanda.conntains("martin"))
+  }
+}
+
+describe "test silvioRodriguez" {
+  test "su calidad es de 10" {
+    assert.equals(10, silvioRodriguez.calidad())
+  }
+
+  test "ocupa 1m2 de escenario" {
+    assert.equals(1, silvioRodriguez.ocupaDeEscenario())
+  }
+}
+
+describe "TEST BADBUNNY" {
+    test "SU CALIDAD INICIAL ES DE 5 SI NO TIENE BANDA NI DECORADO DE ESCENARIO" {
+        assert.equals(5, badBunny.calidad())
+    }
+
+    test "inicialmente ocupa 1m2 de escenario" {
+        assert.equals(1, badBunny.ocupaDeEscenario())
+    }
+    test "badbunny no tiene banda inicialmente" {
+      assert.that(badBunny.tieneBanda())
+    }
+
+    test "badbunny adquiere banda, no tiene decoracion de escenario y aumenta su calidad de show" {
+      badBunny.adquiereBandaParaElShow(2)
+      assert.equals(8, badBunny.calidad())
+    }
+
+    test "badbunny ocupa 20 si se agregan de decoracion 10 luces, 1 pantallaGigante y fuegos artificiales " {
+      
+        luces.añadirLuces(10) // 15 ocupa total
+        badBunny.agregarDecoracionAlEscenario(luces) 
+        badBunny.agregarDecoracionAlEscenario(pantallaGigante) //1 ocupa total
+        badBunny.agregarDecoracionAlEscenario(fuegosArtificiales) // 3 ocupa total
+        assert.equals(20, badBunny.ocupaDeEscenario()) // 15 luces + 1 badbunny + 1 pantallaGigante + 1 fuegosArtificiales
+    }
+
+    test "badbunny  adquiere banda de 6 integrantes, se agregan de decoracion 12 luces, 1 pantallaGigante y fuegos artificiales" {
+      //calidad =  inicial + 3 banda + 10 luces + 2 pantalla + 1 fuegos = 21
+      //ocupa =  (6/2) -> 3 banda + 1 badbunny + 15 luces + 1 pantalla + 3 fuegos
+
+        badBunny.adquiereBandaParaElShow(6) // 3 ocupa
+        luces.añadirLuces(12) // 15 ocupa total
+        badBunny.agregarDecoracionAlEscenario(luces) 
+        badBunny.agregarDecoracionAlEscenario(pantallaGigante) //1 ocupa total
+        badBunny.agregarDecoracionAlEscenario(fuegosArtificiales) // 3 ocupa total
+        assert.equals(21, badBunny.calidad())
+        assert.equals(20, badBunny.ocupaDeEscenario())
+    }
+    
+}
+
