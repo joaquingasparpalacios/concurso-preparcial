@@ -62,7 +62,7 @@ object badBunny {
     method calidad() = calidad
     method ocupaDeEscenario() = (1 + self.cantidadDeDecoracion() + (cantMiembrosBanda / 2)).max(20) 
 
-    
+    method cantMiembrosBanda() = cantMiembrosBanda
     method adquiereBandaParaElShow(cantidadMiembros) {
         tieneBanda = not(tieneBanda)
         cantMiembrosBanda = cantidadMiembros
@@ -79,6 +79,8 @@ object badBunny {
     method cantidadDeDecoracion() = decoracionEscenario.sum({d => d.cantidadQueOcupa()})
     method practicar() {
         calidad = calidad * 2
+        cantMiembrosBanda =- 1
+
     }
     
 }
