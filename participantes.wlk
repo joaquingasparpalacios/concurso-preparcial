@@ -1,4 +1,5 @@
 import jurado.*
+import concurso.*
 
 object taylorswift {
     var costoBanda = 1
@@ -7,7 +8,7 @@ object taylorswift {
     method tieneBanda() = true 
    
     method calidad() = 5 + costoBanda
-    method ocupaDeEscenario() = (costoBanda * 10).max(20)
+    method ocupaDeEscenario() = (costoBanda * 10).max(concurso.escenario())
 
     method practicar() {
         costoBanda = costoBanda * 2
@@ -23,7 +24,7 @@ object morat {
     method calidad() = integrantesDeLaBanda.size() * 2
     method ocupaDeEscenario() {
         return(
-            (integrantesDeLaBanda.fold(0, {i => i.length()})).max(20)
+            (integrantesDeLaBanda.fold(0, {i => i.length()})).max(concurso.escenario())
         )
     }
     
@@ -60,7 +61,7 @@ object badBunny {
     const decoracionEscenario = []
     method tieneBanda() = tieneBanda 
     method calidad() = calidad
-    method ocupaDeEscenario() = (1 + self.cantidadDeDecoracion() + (cantMiembrosBanda / 2)).max(20) 
+    method ocupaDeEscenario() = (1 + self.cantidadDeDecoracion() + (cantMiembrosBanda / 2)).max(concurso.escenario()) 
 
     method cantMiembrosBanda() = cantMiembrosBanda
     method adquiereBandaParaElShow(cantidadMiembros) {
@@ -79,7 +80,7 @@ object badBunny {
     method cantidadDeDecoracion() = decoracionEscenario.sum({d => d.cantidadQueOcupa()})
     method practicar() {
         calidad = calidad * 2
-        cantMiembrosBanda =- 1
+        cantMiembrosBanda =+ 3
 
     }
     

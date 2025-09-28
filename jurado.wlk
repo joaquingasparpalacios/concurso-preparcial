@@ -9,15 +9,14 @@
  object beethoven {
     method puntos(participante) = participante.ocupaDeEscenario() / 10 
     var animo = 1
-    method estaEnojado() = true
-    method estaEntusiasmado() = false
+    var estaEntusiasmado = false
 
-    method cambiarEstadoAnimico() {
-        if(self.estaEnojado()){
-            animo = 1
-        }else{
-            animo = 5 //estaEntusiasmado() = true
-        }   
-    }
+    method estaEnojado() = animo == 1
+    method estaEntusiasmado() = estaEntusiasmado
+
+    method recibeBuenasNoticias() {
+        animo = 5
+        estaEntusiasmado = true
+    } 
 
  }

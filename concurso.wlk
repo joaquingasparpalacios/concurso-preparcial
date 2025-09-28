@@ -3,6 +3,8 @@ import participantes.*
 
 object concurso {
   
+    var property escenario = 20
+     
     const participantes = []
 
     method inscribirParticipante(unParticipante) {
