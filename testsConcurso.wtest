@@ -1,0 +1,10 @@
+import participantes.*
+describe "test TaylowSwift" {
+  test "calidad inicial es 6" {
+    assert.equals(6, taylorswift.calidad())
+  }
+
+  test "inicialmente ocupa 20m2 de escenario" {
+    assert.equals(20, taylorswift.ocupaDeEscenario())
+  }
+}
