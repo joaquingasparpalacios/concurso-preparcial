@@ -1,4 +1,7 @@
 import participantes.*
+import jurado.*
+import concurso.*
+
 describe "test TaylowSwift" {
   test "calidad inicial es 6" {
     assert.equals(6, taylorswift.calidad())
@@ -92,3 +95,34 @@ describe "TEST BADBUNNY" {
     
 }
 
+describe "test CONCURSO" {
+  test "se agregan a taylorSwift con costobanda = 6 y morat con martin en la banda a los integrantes y practican" {
+    taylorswift.actualizarCostoBanda(6) //calidad 11
+    morat.unirALaBanda("martin")
+    concurso.inscribirParticipante(taylorswift)
+    concurso.inscribirParticipante(morat)
+    concurso.practicarParticipantes()
+    assert.equals(17, taylorswift.calidad())
+    assert.notThat(morat.integrantesDeLaBanda.contains("martin"))
+  }
+}
+
+
+describe "test eventos Especiales" {
+  test "se realizan ajustes sobre beethoven que recibe buena noticia pero luego del ajuste su estado animico es 4 y sigue entusiasmado" {
+    beethoven.recibirBuenasNoticias()
+    eventosEspeciales.realizarAjusteA(beethoven)
+    eventosEspeciales.realizarAjusteA(mozart)
+    assert.equals(4, beethoven.animo())
+    assert.that(beethoven.estaEntusiasmado())
+  }
+
+  test "se realizan ajustes sobre mozart luego de escuchar a taylorswift con un costo de banda de 2 post practica" {
+    taylorswift.actualizarCostoBanda(2)
+    taylorswift.practicar() // costoBanda = 4 + 5 calidad => calidad() = 9
+    mozart.puntaje(taylorswift)
+    eventosEspeciales.realizarAjusteA(mozart)
+    assert.equals(8, mozart.puntos())
+
+  }
+}

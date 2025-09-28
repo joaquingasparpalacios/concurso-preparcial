@@ -4,7 +4,7 @@ import concurso.*
 object taylorswift {
     var costoBanda = 1
     
-    method actualizarCostoBande(unCosto) {costoBanda = unCosto}
+    method actualizarCostoBanda(unCosto) {costoBanda = unCosto}
     method tieneBanda() = true 
    
     method calidad() = 5 + costoBanda
