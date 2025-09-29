@@ -1,128 +1,84 @@
+import concurso.*
 import participantes.*
 import jurado.*
-import concurso.*
 
-describe "test TaylowSwift" {
-  test "calidad inicial es 6" {
-    assert.equals(6, taylorswift.calidad())
-  }
-
-  test "inicialmente ocupa 20m2 de escenario" {
-    assert.equals(20, taylorswift.ocupaDeEscenario())
-  }
-
-  test "taylor practica y el calidad asciende a 7" {
-    taylorswift.practicar()
-    assert.equals(7, taylorswift.calidad())
-  }
-}
-
-describe "test MORAT" {
-  test "se agrega a juan, pablo, simon y martin y la calidad es de 8" {
-    morat.integrantesDeLaBanda.addAll(["juan","pablo","simon","martin"])
-    assert.equals(8, morat.calidad())
-  }
-  test "ocupa 20m2 de escenario con todos sus miembros de la banda inciales." {
-    morat.integrantesDeLaBanda.addAll(["juan","pablo","simon","martin"])
-    assert.equals(20, morat.ocupaDeEscenario())
-  }
-
-  test "morat practica y  martin se va de la banda" {
-    morat.integrantesDeLaBanda.addAll(["juan","pablo","simon","martin"])
-    morat.practicar()
-    assert.notThat(morat.integrantesDeLaBanda.conntains("martin"))
-  }
-}
-
-describe "test silvioRodriguez" {
-  test "su calidad es de 10" {
-    assert.equals(10, silvioRodriguez.calidad())
-  }
-
-  test "ocupa 1m2 de escenario" {
-    assert.equals(1, silvioRodriguez.ocupaDeEscenario())
-  }
-  
-}
-
-describe "TEST BADBUNNY" {
-    test "SU CALIDAD INICIAL ES DE 5 SI NO TIENE BANDA NI DECORADO DE ESCENARIO" {
-        assert.equals(5, badBunny.calidad())
-    }
-
-    test "inicialmente ocupa 1m2 de escenario" {
-        assert.equals(1, badBunny.ocupaDeEscenario())
-    }
-    test "badbunny no tiene banda inicialmente" {
-      assert.that(badBunny.tieneBanda())
-    }
-
-    test "badbunny adquiere banda, no tiene decoracion de escenario y aumenta su calidad de show" {
-      badBunny.adquiereBandaParaElShow(2)
-      assert.equals(8, badBunny.calidad())
-    }
-
-    test "badbunny ocupa 20 si se agregan de decoracion 10 luces, 1 pantallaGigante y fuegos artificiales " {
-      
-        luces.añadirLuces(10) // 15 ocupa total
-        badBunny.agregarDecoracionAlEscenario(luces) 
-        badBunny.agregarDecoracionAlEscenario(pantallaGigante) //1 ocupa total
-        badBunny.agregarDecoracionAlEscenario(fuegosArtificiales) // 3 ocupa total
-        assert.equals(20, badBunny.ocupaDeEscenario()) // 15 luces + 1 badbunny + 1 pantallaGigante + 1 fuegosArtificiales
-    }
-
-    test "badbunny  adquiere banda de 6 integrantes, se agregan de decoracion 12 luces, 1 pantallaGigante y fuegos artificiales" {
-      //calidad =  inicial + 3 banda + 10 luces + 2 pantalla + 1 fuegos = 21
-      //ocupa =  (6/2) -> 3 banda + 1 badbunny + 15 luces + 1 pantalla + 3 fuegos
-
-        badBunny.adquiereBandaParaElShow(6) // 3 ocupa
-        luces.añadirLuces(12) // 15 ocupa total
-        badBunny.agregarDecoracionAlEscenario(luces) 
-        badBunny.agregarDecoracionAlEscenario(pantallaGigante) //1 ocupa total
-        badBunny.agregarDecoracionAlEscenario(fuegosArtificiales) // 3 ocupa total
-        assert.equals(21, badBunny.calidad())
-        assert.equals(20, badBunny.ocupaDeEscenario())
-    }
-
-    test "badbunny tiene una banda de 6, su calidad es de 8 pero al practicar aumenta 3 miembros y su calidad se duplica"{
-        badBunny.adquiereBandaParaElShow(6)
-        assert.equals(8, badBunny.calidad())
-        badBunny.practicar()
-        assert.equals(9, badBunny.cantMiembrosBanda())
-        assert.equals(16, badBunny.calidad())
+describe "tests de Un jurado" {
+    test "valoracin promedio de tylorSwift es 10" {
+        concurso.inscribirParticipante(tylorSwift)
+        concurso.valorarAUnParticipante(tylorSwift)
+        assert.equals(10, tylorSwift.valoracionPromedio())
       
     }
-    
+
+  test "test sobre mozart y tylorSwift" {
+    assert.equals(10, mozart.valorar(tylorSwift))
+  }
+
+    test "test sobre mozart y tylorSwift despues de ajustes" {
+        mozart.recibeAjustes()
+        assert.equals(8, mozart.valorar(tylorSwift))
+    }
+
+    test "test sobre beethoven y morat" {
+        assert.equals(10, beethoven.valorar(morat))
+    }
 }
 
-describe "test CONCURSO" {
-  test "se agregan a taylorSwift con costobanda = 6 y morat con martin en la banda a los integrantes y practican" {
-    taylorswift.actualizarCostoBanda(6) //calidad 11
-    morat.unirALaBanda("martin")
-    concurso.inscribirParticipante(taylorswift)
+describe "tests sobre entrenamiento" {
+  test "los participantes entrenan, tylorSwift y morat reciben sus modificaciones" {
+    concurso.inscribirParticipante(tylorSwift)
     concurso.inscribirParticipante(morat)
-    concurso.practicarParticipantes()
-    assert.equals(17, taylorswift.calidad())
-    assert.notThat(morat.integrantesDeLaBanda.contains("martin"))
+    concurso.entrenar()
+    assert.equals(2, tylorSwift.costoDeBanda())
+    assert.equals(3, morat.integrantesDelGrupo().size())
+
+  }
+
+  test "beethoven valora a badbunny y le parece espantoso" {
+    assert.equals(3, beethoven.valorar(badBunny))
+  }
+
+  test "beethoven recibe una flor y valora a badbunny" {
+    badBunny.practicar()
+    assert.equals(8, beethoven.valorar(badBunny))
   }
 }
 
-
-describe "test eventos Especiales" {
-  test "se realizan ajustes sobre beethoven que recibe buena noticia pero luego del ajuste su estado animico es 4 y sigue entusiasmado" {
-    beethoven.recibirBuenasNoticias()
-    eventosEspeciales.realizarAjusteA(beethoven)
-    eventosEspeciales.realizarAjusteA(mozart)
-    assert.equals(4, beethoven.animo())
-    assert.that(beethoven.estaEntusiasmado())
+describe "tests sobre eventos especiales" {
+  test "beethoven recibe una flor y valora a badbunny" {
+    badBunny.practicar()
+    assert.equals(8, beethoven.valorar(badBunny))
   }
 
-  test "se realizan ajustes sobre mozart luego de escuchar a taylorswift con un costo de banda de 2 post practica" {
-    taylorswift.actualizarCostoBanda(2)
-    taylorswift.practicar() // costoBanda = 4 + 5 calidad => calidad() = 9
-    mozart.puntaje(taylorswift)
-    eventosEspeciales.realizarAjusteA(mozart)
-    assert.equals(8, mozart.puntos())
+  test "el jurado recibe ajustes y valora a tylorSwift y morat" {
+    concurso.juradoRecibeUnAjuste()
+    assert.equals(8, mozart.valorar(tylorSwift))
+    assert.equals(10, beethoven.valorar(morat))
+  }
 
+  test "Le llegan buenas noticias a Bethoven por lo que pasa a estar entusiasmado,
+con nivel 5. Valora a badbunny" {
+    beethoven.lleganBuenasNoticias()
+    assert.equals(7, beethoven.valorar(badBunny))
+  }
+
+  test "el concurso decide ampliar su escenario en 10m2 " {
+    concurso.ampliarEscenario(10)
+    assert.equals(30, concurso.escenario())
+    
+  }
+}
+
+describe "tests sobre concurso completo" {
+  test "el ganador del concurso es morat" {
+    concurso.inscribirParticipante(tylorSwift)
+    concurso.inscribirParticipante(morat)
+    concurso.inscribirParticipante(silvioRodriguez)
+    concurso.inscribirParticipante(badBunny)
+
+    concurso.valorarATodosLosParticipantesInscriptos()
+
+    assert.equals(morat, concurso.ganadorDelConcurso())
+    
   }
 }

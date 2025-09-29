@@ -1,29 +1,39 @@
 import jurado.*
-import participantes.*
-
 object concurso {
-  
-    var property escenario = 20
+  var escenario = 20 //m2
+  const property jurado = [mozart, beethoven]
+  const property participantes = []
 
-    const participantes = []
-
-    method inscribirParticipante(unParticipante) {
-      participantes.add(unParticipante)
-    }
-    method darDeBaja(unParticipante){
-        participantes.remove(unParticipante)
-    } 
-
-    method practicarParticipantes() {
-      participantes.forEach({p => p.practicar()})
-    }
-}
-
-object eventosEspeciales {
-  
-  method realizarAjusteA(unPersonaje) {
-    unPersonaje.recibirAjuste()
+  method inscribirParticipante(participante) {
+    participantes.add(participante)
   }
 
-}
+  method darDeBajaA(participante) {
+    participantes.remove(participante)
+  }
 
+  method valorarAUnParticipante(participante) {
+    jurado.forEach({j => j.valorar(participante)})
+  }
+
+  method valorarATodosLosParticipantesInscriptos() {
+    participantes.forEach({p => self.valorarAUnParticipante(p)})
+  }
+
+  method ganadorDelConcurso() {
+    return participantes.max({p => p.valoracionPromedio()})
+  }
+
+  method entrenar() {
+    participantes.forEach({p => p.practicar()})
+  }
+
+  method escenario() = escenario
+  method ampliarEscenario(mts) {
+    escenario += mts
+  }
+
+  method juradoRecibeUnAjuste() {
+    jurado.forEach({j => j.recibeAjustes()})
+  }
+}

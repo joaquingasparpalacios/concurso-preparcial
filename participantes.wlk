@@ -1,123 +1,87 @@
 import jurado.*
 import concurso.*
+object tylorSwift {
+    var property costoDeBanda = 1
+    var valoracionDeJurados = []
 
-object taylorswift {
-    var costoBanda = 1
-    
-    method actualizarCostoBanda(unCosto) {costoBanda = unCosto}
-    method tieneBanda() = true 
-   
-    method calidad() = 5 + costoBanda
-    method ocupaDeEscenario() = (costoBanda * 10).max(concurso.escenario())
+  method calidad() {
+    return 5 + costoDeBanda
+  }
+
+  method ocupacionDeEscenario() {
+    return 20.min(costoDeBanda * 10)
+  }
+
+  method practicar() {
+    costoDeBanda *= 2
+  }
+
+  method recibeValoracion(nuevaValoracion) {
+    valoracionDeJurados.add(nuevaValoracion)
+  }
+
+  method valoracionPromedio() {
+    return (valoracionDeJurados.sum() / valoracionDeJurados.size())
+  }
+}
+object morat {
+  const property integrantesDelGrupo = ["Juan", "Pablo", "Simon", "Martin"]
+  var valoracionDeJurados = []
+  method calidad() {
+    return integrantesDelGrupo.size() * 2
+  }
+
+  method recibeValoracion(nuevaValoracion) {
+    valoracionDeJurados.add(nuevaValoracion)
+  }
+
+  method valoracionPromedio() {
+    return (valoracionDeJurados.sum() / valoracionDeJurados.size())
+  }
+
+  method ocupacionDeEscenario() {
+    return 20.min(integrantesDelGrupo.sum({i => i.size()}))
+  }
+  
+  method integrantesDelGrupoConMenosDe6caracteres() {
+    return integrantesDelGrupo.filter({i => i.size() < 5})
+  }
+
+  method practicar() {
+    integrantesDelGrupo.removeAll(self.integrantesDelGrupoConMenosDe6caracteres())
+    }
+}
+object silvioRodriguez {
+    method calidad() {
+      return 10
+    }
+
+    method ocupacionDeEscenario() {
+      return 1
+    }
 
     method practicar() {
-        costoBanda = costoBanda * 2
-    }
-}
-
-object morat {
-
-    const integrantesDeLaBanda = []
-
-    method tieneBanda() = true 
-   
-    method calidad() = integrantesDeLaBanda.size() * 2
-    method ocupaDeEscenario() {
-        return(
-            (integrantesDeLaBanda.fold(0, {i => i.length()})).max(concurso.escenario())
-        )
-    }
-    
-    method unirALaBanda(unaPersona) {integrantesDeLaBanda.add(unaPersona)}
-    
-    method seVaDeLaBanda(unaPersona) {integrantesDeLaBanda.remove(unaPersona)} //agregado para realizar pruebas
-
-        //entrenamiento
-    
-    method practicar() {self.seVaDeLaBanda(self.integrateConMasDe5Caracteres())}
-    
-    method integrateConMasDe5Caracteres() {
-        return integrantesDeLaBanda.filter({i => i.length()} > 5)
+      //no hace nada, ya es perfecto
     }
 
-        
-}
-
-object silvioRodriguez {
-
-    method tieneBanda() =  false
-    method calidad() = 10
-    method ocupaDeEscenario() = 1  
-
-    method practicar() {}
-  
+    
 }
 
 object badBunny {
-    
-    var calidad = 5
-    var tieneBanda = false
-    var cantMiembrosBanda = 0
-    const decoracionEscenario = []
-    method tieneBanda() = tieneBanda 
-    method calidad() = calidad
-    method ocupaDeEscenario() = (1 + self.cantidadDeDecoracion() + (cantMiembrosBanda / 2)).max(concurso.escenario()) 
+    var property cantidadDePalabrasDichas = 1000
 
-    method cantMiembrosBanda() = cantMiembrosBanda
-    method adquiereBandaParaElShow(cantidadMiembros) {
-        tieneBanda = not(tieneBanda)
-        cantMiembrosBanda = cantidadMiembros
-        calidad =+ 3
+    method calidad() {
+      return 10.min(cantidadDePalabrasDichas / 1000) //cada 1000 palabras dichas hay una que se le entiende, por lo que su calidad aumenta en 1
     }
 
-    method calidadDecoracionEscenario() {
-        calidad = calidad + decoracionEscenario.calidadDeDecorado().sum()
+    method ocupacionDeEscenario() {
+        return 4 
     }
 
-    method agregarDecoracionAlEscenario(unObjeto) {
-        decoracionEscenario.add(unObjeto)
-    } 
-    method cantidadDeDecoracion() = decoracionEscenario.sum({d => d.cantidadQueOcupa()})
     method practicar() {
-        calidad = calidad * 2
-        cantMiembrosBanda =+ 3
-
+      //le regala su flor favorita a beethoven y queda extasiado
+        beethoven.cambiarEstadoDeAnimo(extasiado)
     }
-    
-}
 
-//decoraciones posibles
-object luces {
-    var cantLuces = 0
-    var cantidadQueOcupa = 0
-    method añadirLuces(cantidad) {
-      cantLuces =+ cantidad
-    }
-    method cantidadQueOcupa() {
-        if (cantLuces >=10){
-            return(15)
-        } else {
-            return(5)
-        }
-    }
-    method calidadDeDecorado(){
-        if(cantidadQueOcupa.between(10, 15)){
-            return(10)
-        }else if(cantidadQueOcupa.between(1, 9)){
-            return(5)
-        }else{
-            return(0)
-        }
-    }
-    
 }
-
-object pantallaGigante {
-    method canlidadDeDecorado() = 2 
-    method cantidadQueOcupa() = 1
-}
-
-object fuegosArtificiales {
-    method calidadDeDecorado() = 1 
-    method cantidadQueOcupa() = 3
-}
+  
